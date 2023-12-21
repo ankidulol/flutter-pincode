@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pincode/riverpod/pincode_state.dart';
+import 'package:flutter_pincode/widgets/pincode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PincodeScreen extends ConsumerStatefulWidget {
   const PincodeScreen({super.key});
@@ -28,23 +28,10 @@ class PincodeScreenState extends ConsumerState<PincodeScreen> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-              child: PinCodeTextField(
-                appContext: context,
-                obscureText: true,
-                length: 4,
-                keyboardType: TextInputType.number,
-                pinTheme: PinTheme(
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(5),
-                  fieldHeight: 50,
-                  fieldWidth: 40,
-                  activeFillColor: Colors.white,
-                ),
-                onCompleted: (v) {
-                  ref.read(pinProvider.notifier).state = v;
-                  Navigator.pushNamed(context, '/validate');
-                },
-              ),
+              child: PinCode.obscured(4, (v) {
+                ref.read(pinProvider.notifier).state = v;
+                Navigator.pushNamed(context, '/validate');
+              }),
             ),
           ],
         ),
